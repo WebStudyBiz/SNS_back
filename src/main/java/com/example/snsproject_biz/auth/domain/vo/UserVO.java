@@ -11,4 +11,6 @@ public class UserVO {
     private int loginState;
     private String photoId;
     private String followId;
+    private String createDate;
+    private String modifyDate;
 }

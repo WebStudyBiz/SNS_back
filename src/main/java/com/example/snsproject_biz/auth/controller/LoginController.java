@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class LoginController {
 
+    //
     @GetMapping("/login/{id}")
     public ResponseEntity findNotExpireJwtToken(@PathVariable String id){
         return new ResponseEntity("", HttpStatus.OK);
     }
 
+    // 로그인 요청
     @PostMapping("/login")
     public ResponseEntity loginUser(LoginDTO loginDto){
         return new ResponseEntity("", HttpStatus.OK);
