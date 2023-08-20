@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SnsProjectBizApplication {
 
     public static void main(String[] args) {
+        System.out.println("jieun");
         SpringApplication.run(SnsProjectBizApplication.class, args);
     }
 
