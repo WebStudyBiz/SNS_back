@@ -2,6 +2,7 @@ package com.example.snsproject_biz.auth.controller;
 
 
 import com.example.snsproject_biz.auth.domain.dto.RegisterDTO;
+import com.example.snsproject_biz.auth.domain.entity.UserEntity;
 import com.example.snsproject_biz.auth.service.RegisterServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

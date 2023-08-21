@@ -26,8 +26,11 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public boolean registerUser(RegisterDTO user) {
-        userRepository.save(user.toEntity());
-        return false;
+        if(userRepository.save(user.toEntity()) instanceof UserEntity){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override
