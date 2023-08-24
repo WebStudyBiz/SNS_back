@@ -34,22 +34,26 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public ArrayList<RegisterDTO> findAllUser() {
+    public ArrayList<UserEntity> findAllUser() {
         return null;
     }
 
     @Override
-    public RegisterDTO findByOneUser(String userId) {
-        return null;
+    public ArrayList<UserEntity> findByOneUser(String userId) {
+        return userRepository.findByUserId(userId);
     }
 
     @Override
-    public boolean deleteUser(String userId) {
-        return false;
+    public long deleteUser(String userId) {
+        return userRepository.deleteByUserId(userId);
     }
 
     @Override
     public boolean updateUser(RegisterDTO user) {
-        return false;
+        if(userRepository.save(user.toEntity()) instanceof UserEntity){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

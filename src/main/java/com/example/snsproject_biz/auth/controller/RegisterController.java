@@ -8,8 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
@@ -19,17 +21,6 @@ public class RegisterController {
 
     @Autowired
     private RegisterServiceImpl registerService;
-    // 모든 회원정보 조회
-    @GetMapping("/register")
-    public ResponseEntity getUserByAll(){
-        return new ResponseEntity("", HttpStatus.OK);
-    }
-
-    // 특정 유저 조회
-    @GetMapping("/register/{id}")
-    public ResponseEntity getUserById(@PathVariable String Id){
-        return new ResponseEntity("", HttpStatus.OK);
-    }
 
     @PostMapping("/register/check-duplicate-userid")
     public ResponseEntity DuplicateCheckByUserId(@RequestBody Map<String, String> userData){
@@ -51,10 +42,26 @@ public class RegisterController {
         }
     }
 
+    // 모든 회원정보 조회
+    @GetMapping("/register")
+    public ResponseEntity getUserByAll(){
+        return new ResponseEntity("", HttpStatus.OK);
+    }
+
+    // 특정 유저 조회
+    @GetMapping("/register/{id}")
+    public ResponseEntity getUserById(@PathVariable String id){
+        ArrayList<UserEntity> searchResult = registerService.findByOneUser(id);
+        if(searchResult.size() == 0){
+            return ResponseEntity.badRequest().body(searchResult);
+        }else{
+            return ResponseEntity.ok().body(searchResult);
+        }
+    }
+
     // 회원가입
     @PostMapping("/register")
     public ResponseEntity registerUser(@RequestBody RegisterDTO user){
-        System.out.println(user);
         boolean registerResult = registerService.registerUser(user);
         if(registerResult == true){
             return ResponseEntity.ok().body(registerResult);
@@ -66,12 +73,22 @@ public class RegisterController {
     // 회원탈퇴
     @DeleteMapping("/register/{id}")
     public ResponseEntity deleteUser(@PathVariable String id){
-        return new ResponseEntity("", HttpStatus.OK);
+        long deleteResult = registerService.deleteUser(id);
+        if(deleteResult == 1){
+            return ResponseEntity.ok().body(deleteResult);
+        }else {
+            return ResponseEntity.badRequest().body(deleteResult);
+        }
     }
 
     // 회원정보 수정
     @PutMapping("/register")
     public ResponseEntity updateUser(RegisterDTO user){
-        return new ResponseEntity("", HttpStatus.OK);
+        boolean updateResult = registerService.updateUser(user);
+        if(updateResult == true){
+            return ResponseEntity.ok().body(updateResult);
+        }else{
+            return ResponseEntity.badRequest().body(updateResult);
+        }
     }
 }
